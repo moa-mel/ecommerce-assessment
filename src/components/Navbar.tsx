@@ -1,18 +1,39 @@
+import {useState} from "react"
 import { Container, Button, Nav, Navbar as NavbarBs} from "react-bootstrap"
-import {NavLink} from "react-router-dom"
 import Cart from "../images/cart.jpeg"
+import {NavLink} from "react-router-dom"
 import { useShoppingCart } from "../context/ShoppingCartContext"
+import {StoreItem} from "../components/StoreItem"
 
 export function Navbar () {
+    const [search, setSearch] = useState('')
     const { openCart, cartQuantity } = useShoppingCart()
+   
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value)
+      }
+
     return(
-        <NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
-            <Container>
-                <Nav className="me-auto">
+        <NavbarBs sticky="top" className="bg-white shadow-sm mb-3 ">
+            <Container className="me-auto">
+            <Nav >
                   <Nav.Link to="/" as={NavLink}>
                    Store
                   </Nav.Link>
                 </Nav>
+                <form >
+           <input type ="text" placeholder='Search' 
+           className='justify-content-center' 
+           style={{
+            paddingLeft: "30px",
+           borderRadius: "10px",
+           border: "1px solid grey",
+           WebkitTransition: 'all 0.1s ease-in-out',
+           transition: 'all 0.1s ease-in-out',
+        }}
+        onChange={handleChange} />
+           </form>
                 {cartQuantity > 0 && (
                 <Button 
                 onClick={openCart}
